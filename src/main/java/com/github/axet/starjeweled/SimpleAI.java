@@ -76,9 +76,8 @@ public class SimpleAI {
     MoveMatrix makeMove(MatrixPoint p1, MatrixPoint p2) {
         MoveMatrix mm = new MoveMatrix(m, p1, p2);
 
-        mm.m2.move(p1, p2);
-
-        fillLength(p1, p2, mm);
+        if (mm.m2.move(p1, p2))
+            fillLength(p1, p2, mm);
 
         return mm;
     }

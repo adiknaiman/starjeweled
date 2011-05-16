@@ -30,13 +30,15 @@ public class Matrix {
         this.m = m.clone();
     }
 
-    public void move(MatrixPoint p1, MatrixPoint p2) {
+    public boolean move(MatrixPoint p1, MatrixPoint p2) {
         if (p2.x < 0 || p2.y < 0 || p2.x >= cx || p2.y >= cy)
-            return;
+            return false;
 
         String old = m[p2.y * cx + p2.x];
         m[p2.y * cx + p2.x] = m[p1.y * cx + p1.x];
         m[p1.y * cx + p1.x] = old;
+
+        return true;
     }
 
     public void print() {
