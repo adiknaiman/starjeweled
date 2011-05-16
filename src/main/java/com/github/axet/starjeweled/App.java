@@ -112,8 +112,7 @@ public class App {
                 if (reinit)
                     app.init();
                 app.run();
-                Thread.sleep(1500);
-            } catch (Exception e) {
+            } catch (User.MouseMove e) {
                 e.printStackTrace();
                 
                 text.select(0, 0);
@@ -121,6 +120,30 @@ public class App {
 
                 try {
                     Thread.sleep(5000);
+                } catch (Exception ignore) {
+                }
+
+                reinit = true;
+            } catch (Recognition.UnknownColor e) {
+                e.printStackTrace();
+                
+                text.select(0, 0);
+                text.replaceSelection(new Date() + ": " + exceptionString(e));
+
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception ignore) {
+                }
+
+                reinit = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                
+                text.select(0, 0);
+                text.replaceSelection(new Date() + ": " + exceptionString(e));
+
+                try {
+                    Thread.sleep(1000);
                 } catch (Exception ignore) {
                 }
 

@@ -7,6 +7,12 @@ import java.awt.event.InputEvent;
 
 public class User {
 
+    static class MouseMove extends RuntimeException {
+        public MouseMove(String s) {
+            super(s);
+        }
+    }
+
     Point prev;
 
     Robot robot;
@@ -31,7 +37,7 @@ public class User {
             Point location = MouseInfo.getPointerInfo().getLocation();
 
             if (!location.equals(prev)) {
-                throw new RuntimeException("mouse move!! location was changes");
+                throw new MouseMove("mouse move!! location was changes");
             }
             prev = p;
         }
