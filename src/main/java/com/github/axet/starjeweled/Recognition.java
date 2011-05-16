@@ -33,6 +33,20 @@ public class Recognition {
         cy_step = r.height / cy;
 
         matrix = new int[cx * cy];
+
+        getMatrix();
+    }
+
+    public Recognition(BufferedImage img) {
+        this.img = img;
+        this.r = new Rectangle(img.getWidth(), img.getHeight());
+
+        cx_step = r.width / cx;
+        cy_step = r.height / cy;
+
+        matrix = new int[cx * cy];
+
+        getMatrix();
     }
 
     public int getCX() {
@@ -133,10 +147,10 @@ public class Recognition {
         if (Lookup.inRange(rgb, 0x404030, 0x58565a))
             return "SKUL";
 
-        if (Lookup.inRange(rgb, 0x401640, 0x60326a))
+        if (Lookup.inRange(rgb, 0x401040, 0x60326a))
             return "PURPL";
 
-        if (Lookup.inRange(rgb, 0x606539, 0x858a40))
+        if (Lookup.inRange(rgb, 0x606539, 0x858a45))
             return "YELLOW";
 
         if (Lookup.inRange(rgb, 0x297528, 0x53a535))

@@ -31,11 +31,7 @@ public class MoveMatrix extends Matrix {
      * @param m
      * @return
      */
-    public boolean checkCross(MoveMatrix m) {
-
-        m2.print();
-        m.m2.print();
-        
+    public boolean checkCross(MoveMatrix m) {        
         for (int i = 0; i < m2.m.length; i++) {
             if (m2.m[i].equals("X")) {
                 if (m2.m[i].equals(m.m2.m[i]))

@@ -23,7 +23,16 @@ public class Capture {
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
             Robot robot = new Robot();
             BufferedImage img = robot.createScreenCapture(new Rectangle(size));
-            double d = getGamma(0);
+            return img;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public BufferedImage capture(Rectangle rec) {
+        try {
+            Robot robot = new Robot();
+            BufferedImage img = robot.createScreenCapture(rec);
             return img;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -78,6 +87,7 @@ public class Capture {
 
     public void write(BufferedImage img, String file) {
         try {
+            file = System.getProperty("user.home") + "/Desktop/" + file;
             ImageIO.write(img, "PNG", new File(file));
         } catch (Exception e) {
             throw new RuntimeException(e);
