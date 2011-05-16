@@ -141,7 +141,7 @@ public class Recognition {
     }
 
     public String getType(int rgb) {
-        if (Lookup.inRange(rgb, 0x650505, 0x95311d))
+        if (Lookup.inRange(rgb, 0x650505, 0x9a311d))
             return "RED";
 
         if (Lookup.inRange(rgb, 0x404030, 0x58565a))
@@ -156,7 +156,7 @@ public class Recognition {
         if (Lookup.inRange(rgb, 0x297528, 0x53a535))
             return "GREEN";
 
-        if (Lookup.inRange(rgb, 0x2080a0, 0x49afd0))
+        if (Lookup.inRange(rgb, 0x2080a0, 0x49afd9))
             return "BLUE";
 
         throw new UnknownColor("Unknown " + String.format("%02x", rgb));
