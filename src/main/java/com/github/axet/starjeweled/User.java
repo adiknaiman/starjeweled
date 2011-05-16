@@ -24,8 +24,6 @@ public class User {
     }
 
     void location(Point p) {
-        System.out.println(p);
-        System.out.println();
         if (prev == null) {
             prev = p;
             return;
@@ -33,8 +31,6 @@ public class User {
             Point location = MouseInfo.getPointerInfo().getLocation();
 
             if (!location.equals(prev)) {
-                System.out.println("current!=prev " + location + " prev: " + prev);
-                System.out.println();
                 throw new RuntimeException("mouse move!! location was changes");
             }
             prev = p;
