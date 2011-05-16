@@ -32,7 +32,6 @@ public class App {
     Capture capture;
     Rectangle rectangle;
     User user;
-    boolean reinit = false;
 
     public void init() {
         user = new User();
@@ -90,7 +89,7 @@ public class App {
 
     static public void exception(App app, JTextArea text, Exception e, int time) {
         e.printStackTrace();
-        
+
         text.select(0, 0);
         text.replaceSelection(new Date() + ": " + exceptionString(e));
 
@@ -98,10 +97,8 @@ public class App {
             Thread.sleep(time);
         } catch (Exception ignore) {
         }
-
-        app.reinit = true;        
     }
-    
+
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Starjeweled");
@@ -129,12 +126,16 @@ public class App {
                 app.run();
             } catch (Lookup.NotFound e) {
                 exception(app, text, e, 5000);
+                reinit = true;
             } catch (User.MouseMove e) {
                 exception(app, text, e, 5000);
+                reinit = true;
             } catch (Recognition.UnknownColor e) {
                 exception(app, text, e, 1000);
+                reinit = true;
             } catch (Exception e) {
                 exception(app, text, e, 1000);
+                reinit = true;
             }
         }
     }
