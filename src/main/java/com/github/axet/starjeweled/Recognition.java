@@ -31,6 +31,7 @@ public class Recognition {
     Rectangle r;
 
     ArrayList<TitleRangeColor> colorSet;
+    int colorDisLimit;
 
     int cx = 8;
     int cy = 8;
@@ -46,6 +47,8 @@ public class Recognition {
         colorSet.add(new TitleRangeColor(0x606539, 0x858a45, Matrix.TITLE_YELLOW));
         colorSet.add(new TitleRangeColor(0x297528, 0x53a535, Matrix.TITLE_GREEN));
         colorSet.add(new TitleRangeColor(0x2080a0, 0x49afd9, Matrix.TITLE_BLUE));
+
+        colorDisLimit = getNearestLimit();
     }
 
     public Recognition(BufferedImage img, Rectangle r) {
@@ -172,7 +175,29 @@ public class Recognition {
         throw new UnknownColor(rgb);
     }
 
+    public int getNearestLimit() {
+        int val = -1;
+
+        for (int x1 = 0; x1 < colorSet.size(); x1++) {
+            for (int x2 = 0; x2 < colorSet.size(); x2++) {
+                if (x1 == x2)
+                    continue;
+
+                int dist = colorSet.get(x1).getDistance(colorSet.get(x2).min);
+
+                if (val == -1)
+                    val = dist;
+
+                val = Math.min(val, dist);
+            }
+        }
+
+        return val;
+    }
+
     public String getNearest(int rgb, int max) {
+        max = Math.min(max, colorDisLimit);
+
         TreeMap<Integer, TitleRangeColor> map = new TreeMap<Integer, TitleRangeColor>();
 
         for (TitleRangeColor c : colorSet) {
