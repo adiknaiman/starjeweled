@@ -67,8 +67,16 @@ public class Matrix {
         return true;
     }
 
+    public void set(MatrixPoint p, String val) {
+        set(p.x, p.y, val);
+    }
+
     public void set(int x, int y, String val) {
         matrix[y * cx + x] = val;
+    }
+
+    public String get(MatrixPoint p) {
+        return get(p.x, p.y);
     }
 
     public String get(int x, int y) {

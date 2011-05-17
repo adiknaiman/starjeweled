@@ -9,6 +9,7 @@ public class MoveMatrix extends Matrix {
     public MatrixPoint p2;
     public Matrix moveMatrix;
     public int len;
+    public String seqTitle;
 
     public static String TITLE_MATCH = "X";
 
@@ -41,7 +42,9 @@ public class MoveMatrix extends Matrix {
 
     void fillLength(MatrixPoint p1, MatrixPoint p2) {
         int xMaxLen = 0;
+        String xTitle = null;
         int yMaxLen = 0;
+        String yTitle = null;
 
         for (int y = 0; y < moveMatrix.cy; y++) {
             int x = 0;
@@ -53,6 +56,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen > xMaxLen) {
                         xMaxLen = seqLen;
+                        xTitle = seqTitle;
                     }
 
                     seqTitle = moveMatrix.get(x, y);
@@ -61,6 +65,7 @@ public class MoveMatrix extends Matrix {
             }
             if (seqLen > xMaxLen) {
                 xMaxLen = seqLen;
+                xTitle = seqTitle;
             }
         }
 
@@ -74,6 +79,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen > yMaxLen) {
                         yMaxLen = seqLen;
+                        yTitle = seqTitle;
                     }
 
                     seqTitle = moveMatrix.get(x, y);
@@ -82,6 +88,7 @@ public class MoveMatrix extends Matrix {
             }
             if (seqLen > yMaxLen) {
                 yMaxLen = seqLen;
+                yTitle = seqTitle;
             }
         }
 
@@ -90,6 +97,11 @@ public class MoveMatrix extends Matrix {
             return;
 
         this.len = len;
+
+        if (xMaxLen > yMaxLen)
+            seqTitle = xTitle;
+        if (xMaxLen < yMaxLen)
+            seqTitle = yTitle;
 
         fillSeq();
 
