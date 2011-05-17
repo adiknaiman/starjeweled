@@ -25,26 +25,7 @@ public class RangeColor {
         int g2 = rgb2 & 0x00ff00;
         int b2 = rgb2 & 0x0000ff;
 
-        return (r1 > r2) && (g1 > g2) && (b1 > b2);
-    }
-
-    /**
-     * if rgb1 < rgb2 return true
-     * 
-     * @param rgb1
-     * @param rgb2
-     * @return
-     */
-    public static boolean isLs(int rgb1, int rgb2) {
-        int r1 = rgb1 & 0xff0000;
-        int g1 = rgb1 & 0x00ff00;
-        int b1 = rgb1 & 0x0000ff;
-
-        int r2 = rgb2 & 0xff0000;
-        int g2 = rgb2 & 0x00ff00;
-        int b2 = rgb2 & 0x0000ff;
-
-        return (r1 < r2) && (g1 < g2) && (b1 < b2);
+        return (r1 > r2) || (g1 > g2) || (b1 > b2);
     }
 
     public boolean inRange(int rgb) {
@@ -64,17 +45,17 @@ public class RangeColor {
     }
 
     public int getDistance(int rgb) {
-        int r1 = rgb & 0xff0000;
-        int g1 = rgb & 0x00ff00;
-        int b1 = rgb & 0x0000ff;
+        int r1 = (rgb & 0xff0000) >> 16;
+        int g1 = (rgb & 0x00ff00) >> 8;
+        int b1 = (rgb & 0x0000ff) >> 0;
 
-        int rl = min & 0xff0000;
-        int gl = min & 0x00ff00;
-        int bl = min & 0x0000ff;
+        int rl = (min & 0xff0000) >> 16;
+        int gl = (min & 0x00ff00) >> 8;
+        int bl = (min & 0x0000ff) >> 0;
 
-        int rh = max & 0xff0000;
-        int gh = max & 0x00ff00;
-        int bh = max & 0x0000ff;
+        int rh = (max & 0xff0000) >> 16;
+        int gh = (max & 0x00ff00) >> 8;
+        int bh = (max & 0x0000ff) >> 0;
 
         if ((r1 >= rl && r1 <= rh) && (g1 >= gl && g1 <= gh) && (b1 >= bl && b1 <= bh))
             return 0;
