@@ -41,59 +41,47 @@ public class MoveMatrix extends Matrix {
 
     void fillLength(MatrixPoint p1, MatrixPoint p2) {
         int xMaxLen = 0;
-        int xPos = -1;
-        int xPosY = -1;
         int yMaxLen = 0;
-        int yPos = -1;
-        int yPosX = -1;
 
         for (int y = 0; y < moveMatrix.cy; y++) {
             int x = 0;
             int seqLen = 0;
-            String seqTitle = moveMatrix.get(x,y);
+            String seqTitle = moveMatrix.get(x, y);
             for (; x < moveMatrix.cx; x++) {
-                if (seqTitle.equals(moveMatrix.get(x,y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
+                if (seqTitle.equals(moveMatrix.get(x, y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > xMaxLen) {
                         xMaxLen = seqLen;
-                        xPos = x - seqLen;
-                        xPosY = y;
                     }
 
-                    seqTitle = moveMatrix.get(x,y);
+                    seqTitle = moveMatrix.get(x, y);
                     seqLen = 1;
                 }
             }
             if (seqLen > xMaxLen) {
                 xMaxLen = seqLen;
-                xPos = x - 1 - seqLen;
-                xPosY = y;
             }
         }
 
         for (int x = 0; x < moveMatrix.cx; x++) {
             int y = 0;
             int seqLen = 0;
-            String seqTitle = moveMatrix.get(x,y);
+            String seqTitle = moveMatrix.get(x, y);
             for (; y < moveMatrix.cy; y++) {
-                if (seqTitle.equals(moveMatrix.get(x,y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
+                if (seqTitle.equals(moveMatrix.get(x, y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > yMaxLen) {
                         yMaxLen = seqLen;
-                        yPos = y - seqLen;
-                        yPosX = x;
                     }
 
-                    seqTitle = moveMatrix.get(x,y);
+                    seqTitle = moveMatrix.get(x, y);
                     seqLen = 1;
                 }
             }
             if (seqLen > yMaxLen) {
                 yMaxLen = seqLen;
-                yPos = y - 1 - seqLen;
-                yPosX = x;
             }
         }
 
@@ -103,14 +91,66 @@ public class MoveMatrix extends Matrix {
 
         this.len = len;
 
-        if (xMaxLen > yMaxLen) {
-            for (int x = xPos; x < xPos + xMaxLen; x++)
-                moveMatrix.set(x, xPosY, MoveMatrix.TITLE_MATCH);
-        } else {
-            for (int y = yPos; y < yPos + yMaxLen; y++)
-                moveMatrix.set(yPosX, y, MoveMatrix.TITLE_MATCH);
-        }
+        fillSeq();
+
         moveMatrix.set(p1.x, p1.y, MoveMatrix.TITLE_MATCH);
+        moveMatrix.set(p2.x, p2.y, MoveMatrix.TITLE_MATCH);
+    }
+
+    /**
+     * Sometimes by one move we can collect 2 sequinces, one what we have found
+     * and another - by accident. This function will help us found it.
+     */
+    void fillSeq() {
+        for (int y = 0; y < moveMatrix.cy; y++) {
+            int x = 0;
+            int seqLen = 0;
+            String seqTitle = moveMatrix.get(x, y);
+            for (; x < moveMatrix.cx; x++) {
+                if (seqTitle.equals(moveMatrix.get(x, y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
+                    seqLen++;
+                } else {
+                    if (seqLen >= 3) {
+                        for (int xx = x - seqLen; xx < x; xx++) {
+                            moveMatrix.set(xx, y, MoveMatrix.TITLE_MATCH);
+                        }
+                    }
+
+                    seqTitle = moveMatrix.get(x, y);
+                    seqLen = 1;
+                }
+            }
+            if (seqLen >= 3) {
+                for (int xx = x - seqLen; xx < x; xx++) {
+                    moveMatrix.set(xx, y, MoveMatrix.TITLE_MATCH);
+                }
+            }
+        }
+
+        for (int x = 0; x < moveMatrix.cx; x++) {
+            int y = 0;
+            int seqLen = 0;
+            String seqTitle = moveMatrix.get(x, y);
+            for (; y < moveMatrix.cy; y++) {
+                if (seqTitle.equals(moveMatrix.get(x, y)) && !seqTitle.equals(Matrix.TITLE_UNKNOWN)) {
+                    seqLen++;
+                } else {
+                    if (seqLen >= 3) {
+                        for (int yy = y - seqLen; yy < y; yy++) {
+                            moveMatrix.set(x, yy, MoveMatrix.TITLE_MATCH);
+                        }
+                    }
+
+                    seqTitle = moveMatrix.get(x, y);
+                    seqLen = 1;
+                }
+            }
+            if (seqLen >= 3) {
+                for (int yy = y - seqLen; yy < y; yy++) {
+                    moveMatrix.set(x, yy, MoveMatrix.TITLE_MATCH);
+                }
+            }
+        }
     }
 
 }
