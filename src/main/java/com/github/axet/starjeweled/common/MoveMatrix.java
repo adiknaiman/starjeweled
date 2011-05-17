@@ -102,6 +102,18 @@ public class MoveMatrix extends Matrix {
      * and another - by accident. This function will help us found it.
      */
     void fillSeq() {
+        // we cant change moveMatrix directly.
+        // some combinations like:
+        // * ***
+        // *
+        // *
+        //
+        // ****
+        // *
+        // *
+        // may cause double sequinces and symbol X may hide those changes.
+        Matrix change = new Matrix(moveMatrix);
+
         for (int y = 0; y < moveMatrix.cy; y++) {
             int x = 0;
             int seqLen = 0;
@@ -112,7 +124,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen >= 3) {
                         for (int xx = x - seqLen; xx < x; xx++) {
-                            moveMatrix.set(xx, y, MoveMatrix.TITLE_MATCH);
+                            change.set(xx, y, MoveMatrix.TITLE_MATCH);
                         }
                     }
 
@@ -122,7 +134,7 @@ public class MoveMatrix extends Matrix {
             }
             if (seqLen >= 3) {
                 for (int xx = x - seqLen; xx < x; xx++) {
-                    moveMatrix.set(xx, y, MoveMatrix.TITLE_MATCH);
+                    change.set(xx, y, MoveMatrix.TITLE_MATCH);
                 }
             }
         }
@@ -137,7 +149,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen >= 3) {
                         for (int yy = y - seqLen; yy < y; yy++) {
-                            moveMatrix.set(x, yy, MoveMatrix.TITLE_MATCH);
+                            change.set(x, yy, MoveMatrix.TITLE_MATCH);
                         }
                     }
 
@@ -147,10 +159,12 @@ public class MoveMatrix extends Matrix {
             }
             if (seqLen >= 3) {
                 for (int yy = y - seqLen; yy < y; yy++) {
-                    moveMatrix.set(x, yy, MoveMatrix.TITLE_MATCH);
+                    change.set(x, yy, MoveMatrix.TITLE_MATCH);
                 }
             }
         }
+
+        moveMatrix = change;
     }
 
 }
