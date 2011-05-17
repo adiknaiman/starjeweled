@@ -40,6 +40,12 @@ public class SimpleAI {
         if (wasCross && !wasErased)
             return;
 
+        if (!mm.get(mm.p1).equals(mm.seqTitle)) {
+            MatrixPoint p = mm.p1;
+            mm.p1 = mm.p2;
+            mm.p2 = p;
+        }
+
         best.add(mm);
     }
 
