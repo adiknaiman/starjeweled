@@ -1,12 +1,50 @@
 package com.github.axet.starjeweled.common;
 
 public class RangeColor {
-    int min;
-    int max;
+    public int min;
+    public int max;
 
     public RangeColor(int min, int max) {
         this.min = min;
         this.max = max;
+    }
+
+    /**
+     * if rgb1 > rgb2 return true
+     * 
+     * @param rgb1
+     * @param rgb2
+     * @return
+     */
+    public static boolean isGr(int rgb1, int rgb2) {
+        int r1 = rgb1 & 0xff0000;
+        int g1 = rgb1 & 0x00ff00;
+        int b1 = rgb1 & 0x0000ff;
+
+        int r2 = rgb2 & 0xff0000;
+        int g2 = rgb2 & 0x00ff00;
+        int b2 = rgb2 & 0x0000ff;
+
+        return (r1 > r2) && (g1 > g2) && (b1 > b2);
+    }
+
+    /**
+     * if rgb1 < rgb2 return true
+     * 
+     * @param rgb1
+     * @param rgb2
+     * @return
+     */
+    public static boolean isLs(int rgb1, int rgb2) {
+        int r1 = rgb1 & 0xff0000;
+        int g1 = rgb1 & 0x00ff00;
+        int b1 = rgb1 & 0x0000ff;
+
+        int r2 = rgb2 & 0xff0000;
+        int g2 = rgb2 & 0x00ff00;
+        int b2 = rgb2 & 0x0000ff;
+
+        return (r1 < r2) && (g1 < g2) && (b1 < b2);
     }
 
     public boolean inRange(int rgb) {
@@ -44,23 +82,23 @@ public class RangeColor {
         int total = 0;
 
         if (r1 < rl)
-            total += rl - r1;
+            total = Math.min(total, rl - r1);
 
         if (r1 > rh)
-            total += r1 - rh;
+            total = Math.min(total, r1 - rh);
 
         if (g1 < gl)
-            total += gl - g1;
+            total = Math.min(total, gl - g1);
 
         if (g1 > gh)
-            total += g1 - gh;
+            total = Math.min(total, g1 - gh);
 
         if (b1 < bl)
-            total += bl - b1;
+            total = Math.min(total, bl - b1);
 
         if (b1 > bh)
-            total += b1 - bh;
-        
+            total = Math.min(total, b1 - bh);
+
         return total;
     }
 }
