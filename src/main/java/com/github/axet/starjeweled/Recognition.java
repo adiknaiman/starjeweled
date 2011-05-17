@@ -7,8 +7,13 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.WritableRaster;
+import java.util.ArrayList;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.github.axet.starjeweled.common.Matrix;
+import com.github.axet.starjeweled.common.RangeColor;
+import com.github.axet.starjeweled.common.TitleRangeColor;
 
 public class Recognition {
 
@@ -16,16 +21,32 @@ public class Recognition {
         public UnknownColor(String s) {
             super(s);
         }
+
+        public UnknownColor(int rgb) {
+            super("Unknown " + String.format("%02x", rgb));
+        }
     }
 
     BufferedImage img;
     Rectangle r;
+
+    ArrayList<TitleRangeColor> colorSet;
 
     int cx = 8;
     int cy = 8;
     int[] matrix;
     int cx_step;
     int cy_step;
+
+    {
+        colorSet = new ArrayList<TitleRangeColor>();
+        colorSet.add(new TitleRangeColor(0x650505, 0x9a311d, Matrix.TITLE_RED));
+        colorSet.add(new TitleRangeColor(0x404030, 0x58565a, Matrix.TITLE_SKULL));
+        colorSet.add(new TitleRangeColor(0x401040, 0x60326a, Matrix.TITLE_PURPL));
+        colorSet.add(new TitleRangeColor(0x606539, 0x858a45, Matrix.TITLE_YELLOW));
+        colorSet.add(new TitleRangeColor(0x297528, 0x53a535, Matrix.TITLE_GREEN));
+        colorSet.add(new TitleRangeColor(0x2080a0, 0x49afd9, Matrix.TITLE_BLUE));
+    }
 
     public Recognition(BufferedImage img, Rectangle r) {
         this.img = img;
@@ -143,24 +164,25 @@ public class Recognition {
     }
 
     public String getType(int rgb) {
-        if (Lookup.inRange(rgb, 0x650505, 0x9a311d))
-            return Matrix.TITLE_RED;
+        for (TitleRangeColor c : colorSet) {
+            if (c.inRange(rgb))
+                return c.title;
+        }
 
-        if (Lookup.inRange(rgb, 0x404030, 0x58565a))
-            return Matrix.TITLE_SKULL;
+        throw new UnknownColor(rgb);
+    }
 
-        if (Lookup.inRange(rgb, 0x401040, 0x60326a))
-            return Matrix.TITLE_PURPL;
+    public String getNearest(int rgb, int max) {
+        TreeMap<Integer, TitleRangeColor> map = new TreeMap<Integer, TitleRangeColor>();
 
-        if (Lookup.inRange(rgb, 0x606539, 0x858a45))
-            return Matrix.TITLE_YELLOW;
+        for (TitleRangeColor c : colorSet) {
+            int i = c.getDistance(rgb);
+            map.put(i, c);
+        }
 
-        if (Lookup.inRange(rgb, 0x297528, 0x53a535))
-            return Matrix.TITLE_GREEN;
-
-        if (Lookup.inRange(rgb, 0x2080a0, 0x49afd9))
-            return Matrix.TITLE_BLUE;
-
-        throw new UnknownColor("Unknown " + String.format("%02x", rgb));
+        TitleRangeColor c = map.firstEntry().getValue();
+        if (c.getDistance(rgb) > max)
+            throw new UnknownColor(rgb);
+        return c.title;
     }
 }

@@ -3,6 +3,10 @@ package com.github.axet.starjeweled.common;
 import com.github.axet.starjeweled.Recognition;
 
 public class Matrix {
+
+    public static class UnknownColorFlood extends RuntimeException {
+    }
+
     public int cx;
     public int cy;
     public String[] matrix;
@@ -14,15 +18,30 @@ public class Matrix {
     public static String TITLE_PURPL = "PURPL";
     public static String TITLE_BLUE = "BLUE";
 
+    public static String TITLE_UNKNOWN = "UNKNOWN";
+
     public Matrix(Recognition r) {
         int[] matrix = r.getMatrix();
         this.cx = r.getCX();
         this.cy = r.getCY();
         this.matrix = new String[matrix.length];
+
+        int errCount = 0;
         for (int i1 = 0; i1 < matrix.length; i1++) {
-            this.matrix[i1] = r.getType(matrix[i1]);
+            try {
+                this.matrix[i1] = r.getType(matrix[i1]);
+            } catch (Recognition.UnknownColor ignore) {
+                errCount++;
+                try {
+                    this.matrix[i1] = r.getNearest(matrix[i1], 150);
+                } catch (Recognition.UnknownColor ignore2) {
+                    this.matrix[i1] = Matrix.TITLE_UNKNOWN;
+                }
+            }
         }
 
+        if (errCount > 15)
+            throw new UnknownColorFlood();
     }
 
     public Matrix(Matrix m) {

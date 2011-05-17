@@ -52,7 +52,7 @@ public class MoveMatrix extends Matrix {
             int x = 0;
             String ls = moveMatrix.matrix[y * moveMatrix.cx + x];
             for (; x < moveMatrix.cx; x++) {
-                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x])) {
+                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x]) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > xMaxLen) {
@@ -77,7 +77,7 @@ public class MoveMatrix extends Matrix {
             int y = 0;
             String ls = moveMatrix.matrix[y * moveMatrix.cx + x];
             for (; y < moveMatrix.cy; y++) {
-                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x])) {
+                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x]) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > yMaxLen) {

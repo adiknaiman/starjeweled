@@ -15,6 +15,8 @@ import java.awt.image.RGBImageFilter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+import com.github.axet.starjeweled.common.RangeColor;
+
 public class Lookup {
 
     static class NotFound extends RuntimeException {
@@ -24,35 +26,20 @@ public class Lookup {
     static final int WHITE_MARK = 0xffff0000;
     static final int BLACK_MARK = 0xff00ff00;
 
-    static public boolean inRange(int rgb, int min, int max) {
-        int r1 = rgb & 0xff0000;
-        int g1 = rgb & 0x00ff00;
-        int b1 = rgb & 0x0000ff;
-
-        int rl = min & 0xff0000;
-        int gl = min & 0x00ff00;
-        int bl = min & 0x0000ff;
-
-        int rh = max & 0xff0000;
-        int gh = max & 0x00ff00;
-        int bh = max & 0x0000ff;
-
-        return (r1 >= rl && r1 <= rh) && (g1 >= gl && g1 <= gh) && (b1 >= bl && b1 <= bh);
-    }
-
     static class BoardFilter extends RGBImageFilter {
 
         public BoardFilter() {
-
         }
 
         public int filterRGB(int x, int y, int rgb) {
             int na = rgb & 0x00ffffff;
 
-            if (inRange(na, 0x20201f, 0x272420)) // white
+            RangeColor white = new RangeColor(0x20201f, 0x272420);
+            if (white.inRange(na))
                 return WHITE_MARK;
 
-            if (inRange(na, 0x121212, 0x181613)) // black
+            RangeColor black = new RangeColor(0x121212, 0x181613);
+            if (black.inRange(na)) // black
                 return BLACK_MARK;
 
             return 0x00000000;

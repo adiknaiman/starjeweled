@@ -130,6 +130,9 @@ public class App {
             } catch (User.MouseMove e) {
                 exception(app, text, e, 5000);
                 reinit = true;
+            } catch (Matrix.UnknownColorFlood e) {
+                exception(app, text, e, 1000);
+                reinit = true;
             } catch (Recognition.UnknownColor e) {
                 exception(app, text, e, 1000);
                 reinit = true;
