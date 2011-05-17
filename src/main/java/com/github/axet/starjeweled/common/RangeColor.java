@@ -82,22 +82,22 @@ public class RangeColor {
         int total = 0;
 
         if (r1 < rl)
-            total = Math.min(total, rl - r1);
+            total = rl - r1;
 
         if (r1 > rh)
-            total = Math.min(total, r1 - rh);
+            total += r1 - rh;
 
         if (g1 < gl)
-            total = Math.min(total, gl - g1);
+            total += gl - g1;
 
         if (g1 > gh)
-            total = Math.min(total, g1 - gh);
+            total += g1 - gh;
 
         if (b1 < bl)
-            total = Math.min(total, bl - b1);
+            total += bl - b1;
 
         if (b1 > bh)
-            total = Math.min(total, b1 - bh);
+            total += b1 - bh;
 
         return total;
     }
