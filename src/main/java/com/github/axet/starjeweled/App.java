@@ -38,20 +38,20 @@ public class App {
         user.reset();
 
         capture = new Capture();
-        // BufferedImage img =
-        // capture.write.load("/Users/axet/source/starjeweled/starjeweled/big6.png");
         BufferedImage desktopImage;
+        // desktopImage =
+        // capture.load("/Users/axet/source/starjeweled/starjeweled/big6.png");
         desktopImage = capture.capture();
-        // capture.write.write(img, "capture.png");
+        // capture.write(desktopImage, "capture.png");
 
         Lookup lookup = new Lookup();
         BufferedImage i = lookup.filterMask(desktopImage);
-        // capture.write.write(i, "mask.png");
+        // capture.write(i, "mask.png");
         BufferedImage i2 = lookup.filterNoise(i);
-        // capture.write.write(i2, "noise.png");
+        // capture.write(i2, "noise.png");
         rectangle = lookup.getBounds(i2);
-        // BufferedImage i3 = l.crop(i2, r);
-        // capture.write.write(i3, "bounds.png");
+        BufferedImage i3 = lookup.crop(i2, rectangle);
+        // capture.write(i3, "bounds.png");
     }
 
     public void run() {
