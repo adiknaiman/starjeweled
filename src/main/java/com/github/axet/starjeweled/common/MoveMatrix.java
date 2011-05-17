@@ -50,9 +50,9 @@ public class MoveMatrix extends Matrix {
         for (int y = 0; y < moveMatrix.cy; y++) {
             int seqLen = 0;
             int x = 0;
-            String ls = moveMatrix.matrix[y * moveMatrix.cx + x];
+            String ls = moveMatrix.get(x,y);
             for (; x < moveMatrix.cx; x++) {
-                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x]) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
+                if (ls.equals(moveMatrix.get(x,y)) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > xMaxLen) {
@@ -61,7 +61,7 @@ public class MoveMatrix extends Matrix {
                         xPosY = y;
                     }
 
-                    ls = moveMatrix.matrix[y * moveMatrix.cx + x];
+                    ls = moveMatrix.get(x,y);
                     seqLen = 1;
                 }
             }
@@ -75,9 +75,9 @@ public class MoveMatrix extends Matrix {
         for (int x = 0; x < moveMatrix.cx; x++) {
             int seqLen = 0;
             int y = 0;
-            String ls = moveMatrix.matrix[y * moveMatrix.cx + x];
+            String ls = moveMatrix.get(x,y);
             for (; y < moveMatrix.cy; y++) {
-                if (ls.equals(moveMatrix.matrix[y * moveMatrix.cx + x]) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
+                if (ls.equals(moveMatrix.get(x,y)) && !ls.equals(Matrix.TITLE_UNKNOWN)) {
                     seqLen++;
                 } else {
                     if (seqLen > yMaxLen) {
@@ -86,7 +86,7 @@ public class MoveMatrix extends Matrix {
                         yPosX = x;
                     }
 
-                    ls = moveMatrix.matrix[y * moveMatrix.cx + x];
+                    ls = moveMatrix.get(x,y);
                     seqLen = 1;
                 }
             }
