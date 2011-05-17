@@ -57,7 +57,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen > xMaxLen) {
                         xMaxLen = seqLen;
-                        xPos = x - 1 - seqLen;
+                        xPos = x - seqLen;
                         xPosY = y;
                     }
 
@@ -82,7 +82,7 @@ public class MoveMatrix extends Matrix {
                 } else {
                     if (seqLen > yMaxLen) {
                         yMaxLen = seqLen;
-                        yPos = y - 1 - seqLen;
+                        yPos = y - seqLen;
                         yPosX = x;
                     }
 
