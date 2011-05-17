@@ -161,10 +161,10 @@ public class SimpleAI {
 
     void fill(Matrix m, MatrixPoint p1, MatrixPoint p2, ArrayList<Point> fill) {
         for (Point p : fill)
-            m.m[p.y * m.cx + p.x] = "X";
+            m.m[p.y * m.cx + p.x] = MoveMatrix.TITLE_MATCH;
 
-        m.m[p1.y * m.cx + p1.x] = "X";
-        m.m[p2.y * m.cx + p2.x] = "X";
+        m.m[p1.y * m.cx + p1.x] = MoveMatrix.TITLE_MATCH;
+        m.m[p2.y * m.cx + p2.x] = MoveMatrix.TITLE_MATCH;
     }
 
 }

@@ -7,6 +7,13 @@ public class Matrix {
     public int cy;
     public String[] m;
 
+    public static String TITLE_SKULL = "SKULL";
+    public static String TITLE_RED = "RED";
+    public static String TITLE_YELLOW = "YELLOW";
+    public static String TITLE_GREEN = "GREEN";
+    public static String TITLE_PURPL = "PURPL";
+    public static String TITLE_BLUE = "BLUE";
+
     public Matrix(Recognition r) {
         int[] matrix = r.getMatrix();
         this.cx = r.getCX();

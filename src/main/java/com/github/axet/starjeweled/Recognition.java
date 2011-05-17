@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.WritableRaster;
 
+import com.github.axet.starjeweled.common.Matrix;
+
 public class Recognition {
 
     static public class UnknownColor extends RuntimeException {
@@ -142,22 +144,22 @@ public class Recognition {
 
     public String getType(int rgb) {
         if (Lookup.inRange(rgb, 0x650505, 0x9a311d))
-            return "RED";
+            return Matrix.TITLE_RED;
 
         if (Lookup.inRange(rgb, 0x404030, 0x58565a))
-            return "SKUL";
+            return Matrix.TITLE_SKULL;
 
         if (Lookup.inRange(rgb, 0x401040, 0x60326a))
-            return "PURPL";
+            return Matrix.TITLE_PURPL;
 
         if (Lookup.inRange(rgb, 0x606539, 0x858a45))
-            return "YELLOW";
+            return Matrix.TITLE_YELLOW;
 
         if (Lookup.inRange(rgb, 0x297528, 0x53a535))
-            return "GREEN";
+            return Matrix.TITLE_GREEN;
 
         if (Lookup.inRange(rgb, 0x2080a0, 0x49afd9))
-            return "BLUE";
+            return Matrix.TITLE_BLUE;
 
         throw new UnknownColor("Unknown " + String.format("%02x", rgb));
     }

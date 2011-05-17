@@ -4,10 +4,10 @@ public class MoveMatrix extends Matrix {
 
     public MatrixPoint p1;
     public MatrixPoint p2;
-
     public Matrix m2;
-
     public int len;
+    
+    public static String TITLE_MATCH = "X";
 
     public MoveMatrix(Matrix m, Matrix m2, MatrixPoint p1, MatrixPoint p2, int len) {
         super(m);
@@ -33,7 +33,7 @@ public class MoveMatrix extends Matrix {
      */
     public boolean checkCross(MoveMatrix m) {        
         for (int i = 0; i < m2.m.length; i++) {
-            if (m2.m[i].equals("X")) {
+            if (m2.m[i].equals(TITLE_MATCH)) {
                 if (m2.m[i].equals(m.m2.m[i]))
                     return true;
             }
