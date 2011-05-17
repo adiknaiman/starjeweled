@@ -63,21 +63,24 @@ public class App {
         SimpleAI a = new SimpleAI(m);
         ArrayList<MoveMatrix> ppp = a.getMove();
 
+        int missClick = 10;
+
         for (MoveMatrix p : ppp) {
             Rectangle mr = rr.getRect(p.p1.x, p.p1.y);
             Point pp = rr.getMiddle(mr);
             pp.x += rectangle.x;
             pp.y += rectangle.y;
-            user.click(pp);
+            user.click(user.random(pp, missClick));
 
             mr = rr.getRect(p.p2.x, p.p2.y);
             pp = rr.getMiddle(mr);
             pp.x += rectangle.x;
             pp.y += rectangle.y;
-            user.click(pp);
+            user.click(user.random(pp, missClick));
         }
 
-        user.move(new Point(rectangle.x + rectangle.width + 10, rectangle.y + rectangle.height + 10));
+        Point home = new Point(rectangle.x + rectangle.width + 10, rectangle.y + rectangle.height + 10);
+        user.move(user.random(home, missClick));
     }
 
     static public String exceptionString(Throwable e) {
