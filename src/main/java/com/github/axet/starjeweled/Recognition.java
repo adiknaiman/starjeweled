@@ -48,7 +48,7 @@ public class Recognition {
         colorSet.add(new TitleRangeColor(0x297528, 0x53a535, Matrix.TITLE_GREEN));
         colorSet.add(new TitleRangeColor(0x2080a0, 0x49afd9, Matrix.TITLE_BLUE));
 
-        colorDisLimit = getNearestLimit();
+        colorDisLimit = getNearestLimit() / 2;
     }
 
     public Recognition(BufferedImage img, Rectangle r) {
