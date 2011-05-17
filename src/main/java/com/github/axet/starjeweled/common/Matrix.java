@@ -40,7 +40,7 @@ public class Matrix {
             }
         }
 
-        if (errCount > 15)
+        if (errCount > 30)
             throw new UnknownColorFlood();
     }
 
