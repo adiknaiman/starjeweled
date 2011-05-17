@@ -70,7 +70,7 @@ public class User {
         int steps = distance / 5;
         double k = 1. / steps;
 
-        for (int i = 0; i < steps; i++) {
+        for (int i = 1; i < steps; i++) {
             p.x = (int) (p1.x + i * k * (p2.x - p1.x));
             p.y = (int) (p1.y + i * k * (p2.y - p1.y));
 
