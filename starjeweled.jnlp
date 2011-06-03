@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" 
-    codebase="http://cloud.github.com/downloads/axet/starjeweled/">
-    <information>
-        <title>Starjeweled Screen Analyser</title>
-        <vendor>https://github.com/axet</vendor>
-    </information>
-    
-    <resources>
-        <j2se version="1.6+"
-              href="http://java.sun.com/products/autodl/j2se"/>
-        <jar href="starjeweled.jar" main="true" />
-    </resources>
-    
-    <security>
-      <all-permissions/>
-    </security>
+<jnlp spec="1.0+" codebase="http://cloud.github.com/downloads/axet/starjeweled/">
+  <information>
+    <title>Starjeweled Screen Analyser</title>
+    <vendor>https://github.com/axet</vendor>
+  </information>
 
-    <application-desc
-         name="Starjeweled Screen Analyser Application"
-         main-class="com.github.axet.starjeweled.App">
-     </application-desc>
-     <update check="background"/>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" />
+    <jar href="starjeweled.jar" main="true" />
+  </resources>
+
+  <security>
+    <all-permissions />
+  </security>
+
+  <application-desc name="Starjeweled Screen Analyser Application" main-class="com.github.axet.starjeweled.App">
+  </application-desc>
+  <update check="background" />
 </jnlp>
