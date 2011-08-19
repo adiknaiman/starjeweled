@@ -1,6 +1,7 @@
 package com.github.axet.starjeweled;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -83,6 +84,18 @@ public class Capture {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public BufferedImage load(String path, Rectangle rect) {
+        BufferedImage src = load(path);
+
+        BufferedImage dest = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), src.getType());
+        Graphics g = dest.getGraphics();
+        g.drawImage(src, 0, 0, (int) rect.getWidth(), (int) rect.getHeight(), (int) rect.getX(), (int) rect.getY(),
+                (int) rect.getX() + (int) rect.getWidth(), (int) rect.getY() + (int) rect.getHeight(), null);
+        g.dispose();
+
+        return dest;
     }
 
     public void write(BufferedImage img, String file) {

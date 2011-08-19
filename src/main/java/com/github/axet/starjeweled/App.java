@@ -44,6 +44,7 @@ import com.github.axet.starjeweled.common.MoveMatrix;
 public class App {
     Capture capture;
     Rectangle rectangle;
+    BoardColorsTable colorTable;
     User user;
 
     public static class Output implements HyperlinkListener {
@@ -105,7 +106,7 @@ public class App {
         capture = new Capture();
         BufferedImage desktopImage;
         // desktopImage =
-        // capture.load("/Users/axet/source/starjeweled/starjeweled/big6.png");
+        // capture.load("/Users/axet/Desktop//Screen Shot 2011-08-19 at 18.55.22.png");
         desktopImage = capture.capture();
         // capture.write(desktopImage, "capture.png");
 
@@ -115,16 +116,23 @@ public class App {
         BufferedImage i2 = lookup.filterNoise(i);
         // capture.write(i2, "noise.png");
         rectangle = lookup.getBounds(i2);
-        BufferedImage i3 = lookup.crop(i2, rectangle);
+        // BufferedImage i3 = lookup.crop(i2, rectangle);
         // capture.write(i3, "bounds.png");
+
+        Recognition rr = new Recognition(desktopImage, rectangle);
+        colorTable = new BoardColorsTable(rr.matrix);
     }
 
     public void run() {
+        // BufferedImage desktopRegion =
+        // capture.load("/Users/axet/Desktop//Screen Shot 2011-08-19 at 18.55.22.png",
+        // rectangle);
         BufferedImage desktopRegion = capture.capture(rectangle);
         // capture.write(desktopRegion, "board.png");
         Recognition rr = new Recognition(desktopRegion);
+        RecognitionTable rtable = new RecognitionTable(rr, colorTable);
 
-        Matrix m = new Matrix(rr);
+        Matrix m = new Matrix(rtable);
         SimpleAI a = new SimpleAI(m);
         ArrayList<MoveMatrix> ppp = a.getMove();
 
@@ -197,18 +205,23 @@ public class App {
         boolean reinit = true;
         while (true) {
             try {
-                if (reinit)
+                if (reinit) {
                     app.init();
+                    reinit = false;
+                }
                 app.run();
             } catch (Lookup.NotFound e) {
                 exception(app, out, e, 5000);
                 reinit = true;
             } catch (User.MouseMove e) {
                 exception(app, out, e, 5000);
+            } catch (BoardColorsTable.WrongBounds e) {
+                exception(app, out, e, 1000);
+                reinit = true;
             } catch (Matrix.UnknownColorFlood e) {
                 exception(app, out, e, 1000);
                 reinit = true;
-            } catch (Recognition.UnknownColor e) {
+            } catch (RecognitionTable.UnknownColor e) {
                 exception(app, out, e, 1000);
             } catch (Exception e) {
                 exception(app, out, e, 1000);

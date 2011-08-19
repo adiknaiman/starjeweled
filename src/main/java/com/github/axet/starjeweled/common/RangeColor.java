@@ -4,6 +4,11 @@ public class RangeColor {
     public int min;
     public int max;
 
+    public RangeColor(RangeColor range) {
+        this.min = range.min;
+        this.max = range.max;
+    }
+
     public RangeColor(int min, int max) {
         this.min = min;
         this.max = max;
@@ -81,5 +86,30 @@ public class RangeColor {
             total += b1 - bh;
 
         return total;
+    }
+
+    public void merge(int rgb) {
+        int r1 = (rgb & 0xff0000) >> 16;
+        int g1 = (rgb & 0x00ff00) >> 8;
+        int b1 = (rgb & 0x0000ff) >> 0;
+
+        int rl = (min & 0xff0000) >> 16;
+        int gl = (min & 0x00ff00) >> 8;
+        int bl = (min & 0x0000ff) >> 0;
+
+        int rh = (max & 0xff0000) >> 16;
+        int gh = (max & 0x00ff00) >> 8;
+        int bh = (max & 0x0000ff) >> 0;
+
+        rl = Math.min(rl, r1);
+        gl = Math.min(gl, g1);
+        bl = Math.min(bl, b1);
+
+        rh = Math.max(rh, r1);
+        gh = Math.max(gh, g1);
+        bh = Math.max(bh, b1);
+
+        min = (rl << 16) | (gl << 8) | (bl);
+        max = (rh << 16) | (gh << 8) | (bh);
     }
 }

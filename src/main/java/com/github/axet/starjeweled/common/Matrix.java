@@ -1,6 +1,7 @@
 package com.github.axet.starjeweled.common;
 
 import com.github.axet.starjeweled.Recognition;
+import com.github.axet.starjeweled.RecognitionTable;
 
 public class Matrix {
 
@@ -11,30 +12,31 @@ public class Matrix {
     public int cy;
     public String[] matrix;
 
-    public static String TITLE_SKULL = "SKULL";
-    public static String TITLE_RED = "RED";
-    public static String TITLE_YELLOW = "YELLOW";
-    public static String TITLE_GREEN = "GREEN";
-    public static String TITLE_PURPL = "PURPL";
-    public static String TITLE_BLUE = "BLUE";
+    public static String TITLE_1 = "1";
+    public static String TITLE_2 = "2";
+    public static String TITLE_3 = "3";
+    public static String TITLE_4 = "4";
+    public static String TITLE_5 = "5";
+    public static String TITLE_6 = "6";
+    public static String[] TITLES = { TITLE_1, TITLE_2, TITLE_3, TITLE_4, TITLE_5, TITLE_6 };
 
     public static String TITLE_UNKNOWN = "UNKNOWN";
 
-    public Matrix(Recognition r) {
-        int[] matrix = r.getMatrix();
-        this.cx = r.getCX();
-        this.cy = r.getCY();
+    public Matrix(RecognitionTable r) {
+        int[] matrix = r.r.getMatrix();
+        this.cx = r.r.getCX();
+        this.cy = r.r.getCY();
         this.matrix = new String[matrix.length];
 
         int errCount = 0;
         for (int i1 = 0; i1 < matrix.length; i1++) {
             try {
                 this.matrix[i1] = r.getType(matrix[i1]);
-            } catch (Recognition.UnknownColor ignore) {
+            } catch (RecognitionTable.UnknownColor ignore) {
                 errCount++;
                 try {
                     this.matrix[i1] = r.getNearest(matrix[i1], 150);
-                } catch (Recognition.UnknownColor ignore2) {
+                } catch (RecognitionTable.UnknownColor ignore2) {
                     this.matrix[i1] = Matrix.TITLE_UNKNOWN;
                 }
             }

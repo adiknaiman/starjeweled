@@ -21,6 +21,8 @@ public class Lookup {
 
     static class NotFound extends RuntimeException {
 
+        private static final long serialVersionUID = 5393563026702192412L;
+
     }
 
     static final int WHITE_MARK = 0xffff0000;
@@ -34,11 +36,11 @@ public class Lookup {
         public int filterRGB(int x, int y, int rgb) {
             int na = rgb & 0x00ffffff;
 
-            RangeColor white = new RangeColor(0x20201f, 0x272420);
+            RangeColor white = ColorsTable.TABLE_WHITE;
             if (white.inRange(na))
                 return WHITE_MARK;
 
-            RangeColor black = new RangeColor(0x121212, 0x181613);
+            RangeColor black = ColorsTable.TABLE_BLACK;
             if (black.inRange(na)) // black
                 return BLACK_MARK;
 

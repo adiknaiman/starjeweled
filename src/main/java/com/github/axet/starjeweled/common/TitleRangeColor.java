@@ -4,8 +4,8 @@ public class TitleRangeColor extends RangeColor {
 
     public String title;
 
-    public TitleRangeColor(int min, int max, String title) {
-        super(min, max);
+    public TitleRangeColor(RangeColor range, String title) {
+        super(range);
 
         this.title = title;
     }

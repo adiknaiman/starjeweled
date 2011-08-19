@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.WritableRaster;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -15,41 +16,32 @@ import com.github.axet.starjeweled.common.Matrix;
 import com.github.axet.starjeweled.common.RangeColor;
 import com.github.axet.starjeweled.common.TitleRangeColor;
 
+/**
+ * Class looking for matrix elements and help calculate its average colors.
+ * 
+ * @author axet
+ * 
+ */
+
 public class Recognition {
-
-    static public class UnknownColor extends RuntimeException {
-        public UnknownColor(String s) {
-            super(s);
-        }
-
-        public UnknownColor(int rgb) {
-            super("Unknown " + String.format("%02x", rgb));
-        }
-    }
 
     BufferedImage img;
     Rectangle r;
 
-    ArrayList<TitleRangeColor> colorSet;
-    int colorDisLimit;
+    BoardColorsTable table;
 
+    // number of horizontal element on board
     int cx = 8;
+    // number of vertical element on board
     int cy = 8;
+    // matrix of average color
     int[] matrix;
+    // width in pixels of board cell
     int cx_step;
+    // Height in pixels of board cell
     int cy_step;
-
-    {
-        colorSet = new ArrayList<TitleRangeColor>();
-        colorSet.add(new TitleRangeColor(0x650505, 0x9a311d, Matrix.TITLE_RED));
-        colorSet.add(new TitleRangeColor(0x404030, 0x58565a, Matrix.TITLE_SKULL));
-        colorSet.add(new TitleRangeColor(0x401040, 0x60326a, Matrix.TITLE_PURPL));
-        colorSet.add(new TitleRangeColor(0x606539, 0x858a45, Matrix.TITLE_YELLOW));
-        colorSet.add(new TitleRangeColor(0x297528, 0x53a535, Matrix.TITLE_GREEN));
-        colorSet.add(new TitleRangeColor(0x2080a0, 0x49afd9, Matrix.TITLE_BLUE));
-
-        colorDisLimit = getNearestLimit() / 2;
-    }
+    // step in pixels from cell bounds
+    int cell_bounds = 5;
 
     public Recognition(BufferedImage img, Rectangle r) {
         this.img = img;
@@ -58,9 +50,7 @@ public class Recognition {
         cx_step = r.width / cx;
         cy_step = r.height / cy;
 
-        matrix = new int[cx * cy];
-
-        getMatrix();
+        matrix = getMatrix();
     }
 
     public Recognition(BufferedImage img) {
@@ -70,15 +60,23 @@ public class Recognition {
         cx_step = r.width / cx;
         cy_step = r.height / cy;
 
-        matrix = new int[cx * cy];
-
-        getMatrix();
+        matrix = getMatrix();
     }
 
+    /**
+     * get working image width.
+     * 
+     * @return image width
+     */
     public int getCX() {
         return cx;
     }
 
+    /**
+     * get working image height.
+     * 
+     * @return image height
+     */
     public int getCY() {
         return cy;
     }
@@ -97,18 +95,9 @@ public class Recognition {
         return new Point(r.x + r.width / 2, r.y + r.height / 2);
     }
 
-    public void print() {
-        for (int y = 0; y < 8; y++) {
-            for (int x = 0; x < 8; x++) {
-                System.out.print(getType(matrix[y * 8 + x]) + " - ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println();
-    }
-
     public int[] getMatrix() {
+        int[] matrix = new int[cx * cy];
+
         for (int y = 0; y < cy; y++) {
             for (int x = 0; x < cx; x++) {
                 matrix[y * cx + x] = getAverage(img, getRect(x, y));
@@ -124,13 +113,20 @@ public class Recognition {
         return image;
     }
 
+    /**
+     * Get average color for a rectangle.
+     * 
+     * @param img
+     * @param rrr
+     * @return
+     */
     int getAverage(BufferedImage img, Rectangle rrr) {
         Rectangle rr = new Rectangle(rrr);
 
-        rr.x += 5;
-        rr.y += 5;
-        rr.width -= 10;
-        rr.height -= 10;
+        rr.x += cell_bounds;
+        rr.y += cell_bounds;
+        rr.width -= cell_bounds * 2;
+        rr.height -= cell_bounds * 2;
 
         int[] buf = new int[rr.width * rr.height];
         img.getRGB(rr.x, rr.y, rr.width, rr.height, buf, 0, rr.width);
@@ -166,48 +162,4 @@ public class Recognition {
         return average;
     }
 
-    public String getType(int rgb) {
-        for (TitleRangeColor c : colorSet) {
-            if (c.inRange(rgb))
-                return c.title;
-        }
-
-        throw new UnknownColor(rgb);
-    }
-
-    public int getNearestLimit() {
-        int val = -1;
-
-        for (int x1 = 0; x1 < colorSet.size(); x1++) {
-            for (int x2 = 0; x2 < colorSet.size(); x2++) {
-                if (x1 == x2)
-                    continue;
-
-                int dist = colorSet.get(x1).getDistance(colorSet.get(x2).min);
-
-                if (val == -1)
-                    val = dist;
-
-                val = Math.min(val, dist);
-            }
-        }
-
-        return val;
-    }
-
-    public String getNearest(int rgb, int max) {
-        max = Math.min(max, colorDisLimit);
-
-        TreeMap<Integer, TitleRangeColor> map = new TreeMap<Integer, TitleRangeColor>();
-
-        for (TitleRangeColor c : colorSet) {
-            int i = c.getDistance(rgb);
-            map.put(i, c);
-        }
-
-        TitleRangeColor c = map.firstEntry().getValue();
-        if (c.getDistance(rgb) > max)
-            throw new UnknownColor(rgb);
-        return c.title;
-    }
 }
