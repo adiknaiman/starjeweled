@@ -197,7 +197,7 @@ public class Lookup {
             }
         }
 
-        if (r.width == 0 || r.height == 0)
+        if (r.width <= 100 || r.height <= 100)
             throw new NotFound();
 
         return r;
