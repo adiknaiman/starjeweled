@@ -214,6 +214,7 @@ public class App {
                 exception(app, out, e, 5000);
                 reinit = true;
             } catch (User.MouseMove e) {
+                app.user.reset();
                 exception(app, out, e, 5000);
             } catch (BoardColorsTable.WrongBounds e) {
                 exception(app, out, e, 1000);
