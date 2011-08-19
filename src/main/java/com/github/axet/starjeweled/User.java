@@ -43,7 +43,7 @@ public class User {
             Point location = MouseInfo.getPointerInfo().getLocation();
 
             if (!location.equals(prev)) {
-                throw new MouseMove("mouse move!! location was changes");
+                throw new MouseMove("mouse move!! location was changes " + location + " " + prev);
             }
             prev = new Point(p);
         }
@@ -67,7 +67,7 @@ public class User {
 
         int distance = (int) Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 
-        int steps = distance / 5;
+        int steps = distance / 30;
         double k = 1. / steps;
 
         for (int i = 1; i < steps; i++) {
