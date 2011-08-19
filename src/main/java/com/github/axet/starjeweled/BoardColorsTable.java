@@ -42,6 +42,11 @@ public class BoardColorsTable {
 
     public BoardColorsTable(int[] matrix) {
         colorSet = fillColors(matrix);
+
+        ArrayList<String> groups = getGroups();
+        if (groups.size() != 0)
+            throw new WrongBounds("not enougth color groups, mens wrong board bounds or more elements on screen");
+
         colorMaxLimit = getNearestLimit() / 2;
     }
 
@@ -67,12 +72,18 @@ public class BoardColorsTable {
         }
     }
 
-    void fillNewGroup(ArrayList<TitleRangeColor> colorSet, int color) {
+    ArrayList<String> getGroups() {
         ArrayList<String> groups = new ArrayList<String>(Arrays.asList(Matrix.TITLES));
 
         for (TitleRangeColor r : colorSet) {
             groups.remove(r.title);
         }
+
+        return groups;
+    }
+
+    void fillNewGroup(ArrayList<TitleRangeColor> colorSet, int color) {
+        ArrayList<String> groups = getGroups();
 
         if (groups.size() == 0)
             throw new WrongBounds("too many color groups, mens wrong board bounds or more elements on screen");
