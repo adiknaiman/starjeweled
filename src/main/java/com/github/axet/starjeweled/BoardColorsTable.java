@@ -37,7 +37,7 @@ public class BoardColorsTable {
     ArrayList<TitleRangeColor> colorSet;
     // first color fillup, do not group colors far then this distance
     int colorDisLimit = 50;
-    // max distance between loaded / generated color table
+    // max distance between loaded / generated colors in table
     int colorMaxLimit;
 
     public BoardColorsTable(int[] matrix) {
