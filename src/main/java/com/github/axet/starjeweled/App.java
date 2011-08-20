@@ -43,7 +43,8 @@ import com.github.axet.starjeweled.core.Recognition;
 import com.github.axet.starjeweled.core.RecognitionTable;
 import com.github.axet.starjeweled.core.SimpleAI;
 import com.github.axet.starjeweled.core.User;
-import com.github.axet.starjeweled.ui.Output;
+import com.github.axet.starjeweled.ui.MainFrame;
+import com.github.axet.starjeweled.ui.OutputPane;
 
 /**
  * Hello world!
@@ -51,6 +52,8 @@ import com.github.axet.starjeweled.ui.Output;
  */
 
 public class App {
+    MainFrame frame;
+
     Capture capture;
     Rectangle rectangle;
     BoardColorsTable colorTable;
@@ -60,42 +63,52 @@ public class App {
         user = new User();
         user.reset();
 
+        frame.analyse.init(8, 8);
+
         capture = new Capture();
         BufferedImage desktopImage;
         // desktopImage =
         // capture.load("/Users/axet/Desktop//Screen Shot 2011-08-19 at 18.55.22.png");
         desktopImage = capture.capture();
-        // capture.write(desktopImage, "capture.png");
+        frame.capture.setImage(desktopImage);
 
         Lookup lookup = new Lookup();
         BufferedImage i = lookup.filterMask(desktopImage);
-        // capture.write(i, "mask.png");
+        frame.mask.setImage(i);
         BufferedImage i2 = lookup.filterNoise(i);
-        // capture.write(i2, "noise.png");
+        frame.noise.setImage(i2);
         rectangle = lookup.getBounds(i2);
-        // BufferedImage i3 = lookup.crop(i2, rectangle);
-        // capture.write(i3, "bounds.png");
+        BufferedImage i3 = lookup.crop(i2, rectangle);
+        frame.bounds.setImage(i3);
 
         Recognition rr = new Recognition(desktopImage, rectangle);
         colorTable = new BoardColorsTable(rr.matrix);
+        
+        frame.analyse.init(rr.getCX(), rr.getCY());
     }
 
     public void run() {
-        // BufferedImage desktopRegion =
+        BufferedImage desktopRegion;
+        // desktopRegion =
         // capture.load("/Users/axet/Desktop//Screen Shot 2011-08-19 at 18.55.22.png",
         // rectangle);
-        BufferedImage desktopRegion = capture.capture(rectangle);
-        // capture.write(desktopRegion, "board.png");
+        desktopRegion = capture.capture(rectangle);
+        frame.board.setImage(desktopRegion);
         Recognition rr = new Recognition(desktopRegion);
         RecognitionTable rtable = new RecognitionTable(rr, colorTable);
-
+        
         Matrix m = new Matrix(rtable);
+        
+        frame.analyse.draw(colorTable, m);
+
         SimpleAI a = new SimpleAI(m);
         ArrayList<MoveMatrix> ppp = a.getMove();
 
         int missClick = 10;
 
-        for (MoveMatrix p : ppp) {
+        for (MoveMatrix p : ppp) {            
+            frame.analyse.move(p.p1, p.p2);
+
             Rectangle mr = rr.getRect(p.p1.x, p.p1.y);
             Point pp = rr.getMiddle(mr);
             pp.x += rectangle.x;
@@ -108,6 +121,7 @@ public class App {
             pp.y += rectangle.y;
             user.click(user.random(pp, missClick));
         }
+        frame.analyse.clearMove();
 
         Point home = new Point(rectangle.x + rectangle.width + 10, rectangle.y + rectangle.height + 10);
         user.move(user.random(home, missClick));
@@ -120,7 +134,7 @@ public class App {
         return sw.toString();
     }
 
-    static public void exception(App app, Output out, Exception e, int time) {
+    static public void exception(App app, OutputPane out, Exception e, int time) {
         e.printStackTrace();
 
         out.begin(new Date() + ": " + exceptionString(e));
@@ -132,15 +146,12 @@ public class App {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Starjeweled");
+        MainFrame frame = new MainFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(new Dimension(600, 300));
+        frame.setSize(new Dimension(700, 500));
         frame.setAlwaysOnTop(true);
-        frame.getRootPane().setLayout(new BorderLayout());
 
-        Output out = new Output();
-
-        frame.getRootPane().add(out, BorderLayout.CENTER);
+        OutputPane out = frame.out;
 
         out.end("<br/>");
         out.end("Welcome to Starjweled screen analyser");
@@ -153,6 +164,7 @@ public class App {
         frame.setVisible(true);
 
         App app = new App();
+        app.frame = frame;
 
         boolean reinit = true;
         while (true) {

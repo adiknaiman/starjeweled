@@ -57,7 +57,7 @@ public class RecognitionTable {
     }
 
     public String getType(int rgb) {
-        for (TitleRangeColor c : colors.colorSet) {
+        for (TitleRangeColor c : colors.colorSet.values()) {
             if (c.inRange(rgb))
                 return c.title;
         }
@@ -70,7 +70,7 @@ public class RecognitionTable {
 
         TreeMap<Integer, TitleRangeColor> map = new TreeMap<Integer, TitleRangeColor>();
 
-        for (TitleRangeColor c : colors.colorSet) {
+        for (TitleRangeColor c : colors.colorSet.values()) {
             int i = c.getDistance(rgb);
             map.put(i, c);
         }

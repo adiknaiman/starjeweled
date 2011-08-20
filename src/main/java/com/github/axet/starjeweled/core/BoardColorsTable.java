@@ -34,7 +34,7 @@ public class BoardColorsTable {
 
     }
 
-    ArrayList<TitleRangeColor> colorSet;
+    TreeMap<String, TitleRangeColor> colorSet;
     // first color fillup, do not group colors far then this distance
     int colorDisLimit = 50;
     // max distance between loaded / generated colors in table
@@ -50,17 +50,17 @@ public class BoardColorsTable {
         colorMaxLimit = getNearestLimit() / 2;
     }
 
-    ArrayList<TitleRangeColor> fillColors(int[] matrix) {
-        colorSet = new ArrayList<TitleRangeColor>();
+    TreeMap<String, TitleRangeColor> fillColors(int[] matrix) {
+        colorSet = new TreeMap<String, TitleRangeColor>();
         for (int a : matrix) {
             fillColor(colorSet, a);
         }
         return colorSet;
     }
 
-    void fillColor(ArrayList<TitleRangeColor> colorSet, int color) {
+    void fillColor(TreeMap<String, TitleRangeColor> colorSet, int color) {
         boolean found = false;
-        for (TitleRangeColor r : colorSet) {
+        for (TitleRangeColor r : colorSet.values()) {
             int dist = r.getDistance(color);
             if (dist < colorDisLimit) {
                 r.merge(color);
@@ -75,31 +75,34 @@ public class BoardColorsTable {
     ArrayList<String> getGroups() {
         ArrayList<String> groups = new ArrayList<String>(Arrays.asList(Matrix.TITLES));
 
-        for (TitleRangeColor r : colorSet) {
+        for (TitleRangeColor r : colorSet.values()) {
             groups.remove(r.title);
         }
 
         return groups;
     }
 
-    void fillNewGroup(ArrayList<TitleRangeColor> colorSet, int color) {
+    void fillNewGroup(TreeMap<String, TitleRangeColor> colorSet, int color) {
         ArrayList<String> groups = getGroups();
 
         if (groups.size() == 0)
             throw new WrongBounds("too many color groups, mens wrong board bounds or more elements on screen");
 
-        colorSet.add(new TitleRangeColor(new RangeColor(color, color), groups.remove(0)));
+        String name = groups.remove(0);
+        colorSet.put(name, new TitleRangeColor(new RangeColor(color, color), name));
     }
 
     int getNearestLimit() {
         int val = -1;
 
-        for (int x1 = 0; x1 < colorSet.size(); x1++) {
-            for (int x2 = 0; x2 < colorSet.size(); x2++) {
+        TitleRangeColor[] values = colorSet.values().toArray(new TitleRangeColor[0]);
+        
+        for (int x1 = 0; x1 < values.length; x1++) {
+            for (int x2 = 0; x2 < values.length; x2++) {
                 if (x1 == x2)
                     continue;
 
-                int dist = colorSet.get(x1).getDistance(colorSet.get(x2).min);
+                int dist = values[x1].getDistance(values[x2].min);
 
                 if (val == -1)
                     val = dist;
@@ -109,6 +112,10 @@ public class BoardColorsTable {
         }
 
         return val;
+    }
+
+    public TitleRangeColor getColor(String name) {
+        return colorSet.get(name);
     }
 
 }

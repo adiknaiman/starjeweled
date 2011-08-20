@@ -12,12 +12,12 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-public class Output extends JScrollPane implements HyperlinkListener {
+public class OutputPane extends JScrollPane implements HyperlinkListener {
     JTextPane pane;
     HTMLEditorKit kit = new HTMLEditorKit();
     HTMLDocument doc = new HTMLDocument();
 
-    public Output() {
+    public OutputPane() {
         super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
