@@ -26,7 +26,8 @@ public class User {
     }
 
     public void reset() {
-        prev = null;
+        Point location = MouseInfo.getPointerInfo().getLocation();
+        prev = location;
     }
 
     /**
