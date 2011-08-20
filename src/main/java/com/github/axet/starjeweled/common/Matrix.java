@@ -1,7 +1,7 @@
 package com.github.axet.starjeweled.common;
 
-import com.github.axet.starjeweled.Recognition;
-import com.github.axet.starjeweled.RecognitionTable;
+import com.github.axet.starjeweled.core.Recognition;
+import com.github.axet.starjeweled.core.RecognitionTable;
 
 public class Matrix {
 

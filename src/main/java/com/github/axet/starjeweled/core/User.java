@@ -1,4 +1,4 @@
-package com.github.axet.starjeweled;
+package com.github.axet.starjeweled.core;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class User {
 
-    static class MouseMove extends RuntimeException {
+    public static class MouseMove extends RuntimeException {
         public MouseMove(String s) {
             super(s);
         }

@@ -1,4 +1,4 @@
-package com.github.axet.starjeweled;
+package com.github.axet.starjeweled.core;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -35,7 +35,7 @@ public class Recognition {
     // number of vertical element on board
     int cy = 8;
     // matrix of average color
-    int[] matrix;
+    public int[] matrix;
     // width in pixels of board cell
     int cx_step;
     // Height in pixels of board cell

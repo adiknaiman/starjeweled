@@ -1,4 +1,4 @@
-package com.github.axet.starjeweled;
+package com.github.axet.starjeweled.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -19,7 +19,7 @@ import com.github.axet.starjeweled.common.RangeColor;
 
 public class Lookup {
 
-    static class NotFound extends RuntimeException {
+    public static class NotFound extends RuntimeException {
 
         private static final long serialVersionUID = 5393563026702192412L;
 

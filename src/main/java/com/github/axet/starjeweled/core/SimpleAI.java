@@ -1,4 +1,4 @@
-package com.github.axet.starjeweled;
+package com.github.axet.starjeweled.core;
 
 import java.awt.Point;
 import java.util.ArrayList;

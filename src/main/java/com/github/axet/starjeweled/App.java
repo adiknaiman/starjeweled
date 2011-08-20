@@ -19,6 +19,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
@@ -35,6 +36,13 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import com.github.axet.starjeweled.common.Matrix;
 import com.github.axet.starjeweled.common.MoveMatrix;
+import com.github.axet.starjeweled.core.BoardColorsTable;
+import com.github.axet.starjeweled.core.Capture;
+import com.github.axet.starjeweled.core.Lookup;
+import com.github.axet.starjeweled.core.Recognition;
+import com.github.axet.starjeweled.core.RecognitionTable;
+import com.github.axet.starjeweled.core.SimpleAI;
+import com.github.axet.starjeweled.core.User;
 
 /**
  * Hello world!
