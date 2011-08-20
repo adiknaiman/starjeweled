@@ -179,7 +179,7 @@ public class App {
                 reinit = true;
             } catch (User.MouseMove e) {
                 app.user.reset();
-                exception(app, out, e, 5000);
+                exception(app, out, e, 1500);
             } catch (BoardColorsTable.WrongBounds e) {
                 exception(app, out, e, 1000);
                 reinit = true;
