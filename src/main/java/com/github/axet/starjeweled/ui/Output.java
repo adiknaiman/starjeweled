@@ -2,6 +2,7 @@ package com.github.axet.starjeweled.ui;
 
 import java.net.URI;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -11,12 +12,20 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-public class Output implements HyperlinkListener {
+public class Output extends JScrollPane implements HyperlinkListener {
     JTextPane pane;
     HTMLEditorKit kit = new HTMLEditorKit();
     HTMLDocument doc = new HTMLDocument();
 
-    public Output(JTextPane pane) {
+    public Output() {
+        super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        
+        JTextPane pane = new JTextPane();
+        pane.setEditable(false);
+        
+        setViewportView(pane);
+
         pane.setEditorKit(kit);
         pane.setDocument(doc);
 

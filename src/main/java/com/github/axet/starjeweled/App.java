@@ -138,14 +138,9 @@ public class App {
         frame.setAlwaysOnTop(true);
         frame.getRootPane().setLayout(new BorderLayout());
 
-        JTextPane text = new JTextPane();
-        Output out = new Output(text);
-        text.setEditable(false);
+        Output out = new Output();
 
-        JScrollPane pScroll = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        frame.getRootPane().add(pScroll, BorderLayout.CENTER);
+        frame.getRootPane().add(out, BorderLayout.CENTER);
 
         out.end("<br/>");
         out.end("Welcome to Starjweled screen analyser");
