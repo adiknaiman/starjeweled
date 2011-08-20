@@ -29,6 +29,8 @@ public class ColoredPane extends JPanel {
     MatrixPoint p2;
 
     public ColoredPane() {
+        setLayout(new AspectRatioLayout());
+        add(aspect);
     }
 
     public void init(int cx, int cy) {
@@ -49,9 +51,8 @@ public class ColoredPane extends JPanel {
 
             aspect.add(l);
         }
-
-        setLayout(new AspectRatioLayout());
-        add(aspect);
+        
+        aspect.validate();
     }
 
     public void draw(BoardColorsTable colors, Matrix m) {
