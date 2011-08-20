@@ -26,7 +26,9 @@ public class ColoredPane extends JPanel {
     int cx, cy;
 
     MatrixPoint p1;
+    int p1rgb;
     MatrixPoint p2;
+    int p2rgb;
 
     public ColoredPane() {
         setLayout(new AspectRatioLayout());
@@ -51,7 +53,7 @@ public class ColoredPane extends JPanel {
 
             aspect.add(l);
         }
-        
+
         aspect.validate();
     }
 
@@ -61,39 +63,36 @@ public class ColoredPane extends JPanel {
                 String s = m.get(x, y);
                 RangeColor r = colors.getColor(s);
                 if (r == null) {
-                    setColor(x, y, Color.BLACK.getRGB());
+                    setColor(new MatrixPoint(x, y), Color.BLACK.getRGB());
                 } else {
-                    setColor(x, y, r.average());
+                    setColor(new MatrixPoint(x, y), r.average());
                 }
             }
         }
     }
 
-    void setColor(int x, int y, int rgb) {
-        int pos = cx * y + x;
+    void setColor(MatrixPoint p, int rgb) {
+        int pos = cx * p.y + p.x;
         JLabel l = labels[pos];
         l.setOpaque(true);
         l.setBackground(new Color(rgb));
         l.repaint();
     }
 
-    void setLabel(int x, int y, String text) {
-        int pos = cx * y + x;
+    int getColor(MatrixPoint p) {
+        int pos = cx * p.y + p.x;
         JLabel l = labels[pos];
-        l.setText(text);
-        l.setHorizontalTextPosition(JLabel.CENTER);
-        l.setVerticalTextPosition(JLabel.CENTER);
-        l.repaint();
+        return l.getBackground().getRGB();
     }
 
     public void clearMove() {
         if (p1 != null) {
-            setColor(p1.x, p1.y, Color.BLACK.getRGB());
+            setColor(p1, p1rgb);
             p1 = null;
         }
 
         if (p2 != null) {
-            setColor(p2.x, p2.y, Color.BLACK.getRGB());
+            setColor(p2, p2rgb);
             p2 = null;
         }
     }
@@ -102,10 +101,12 @@ public class ColoredPane extends JPanel {
         clearMove();
 
         this.p1 = p1;
+        this.p1rgb = getColor(p1);
         this.p2 = p2;
+        this.p2rgb = getColor(p2);
 
-        setColor(p1.x, p1.y, Color.WHITE.getRGB());
-        setColor(p2.x, p2.y, Color.WHITE.getRGB());
+        setColor(p1, Color.WHITE.getRGB());
+        setColor(p2, Color.WHITE.getRGB());
     }
 
 }

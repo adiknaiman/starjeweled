@@ -83,7 +83,7 @@ public class App {
 
         Recognition rr = new Recognition(desktopImage, rectangle);
         colorTable = new BoardColorsTable(rr.matrix);
-        
+
         frame.analyse.init(rr.getCX(), rr.getCY());
     }
 
@@ -96,9 +96,9 @@ public class App {
         frame.board.setImage(desktopRegion);
         Recognition rr = new Recognition(desktopRegion);
         RecognitionTable rtable = new RecognitionTable(rr, colorTable);
-        
+
         Matrix m = new Matrix(rtable);
-        
+
         frame.analyse.draw(colorTable, m);
 
         SimpleAI a = new SimpleAI(m);
@@ -106,22 +106,25 @@ public class App {
 
         int missClick = 10;
 
-        for (MoveMatrix p : ppp) {            
-            frame.analyse.move(p.p1, p.p2);
+        try {
+            for (MoveMatrix p : ppp) {
+                frame.analyse.move(p.p1, p.p2);
 
-            Rectangle mr = rr.getRect(p.p1.x, p.p1.y);
-            Point pp = rr.getMiddle(mr);
-            pp.x += rectangle.x;
-            pp.y += rectangle.y;
-            user.click(user.random(pp, missClick));
+                Rectangle mr = rr.getRect(p.p1.x, p.p1.y);
+                Point pp = rr.getMiddle(mr);
+                pp.x += rectangle.x;
+                pp.y += rectangle.y;
+                user.click(user.random(pp, missClick));
 
-            mr = rr.getRect(p.p2.x, p.p2.y);
-            pp = rr.getMiddle(mr);
-            pp.x += rectangle.x;
-            pp.y += rectangle.y;
-            user.click(user.random(pp, missClick));
+                mr = rr.getRect(p.p2.x, p.p2.y);
+                pp = rr.getMiddle(mr);
+                pp.x += rectangle.x;
+                pp.y += rectangle.y;
+                user.click(user.random(pp, missClick));
+            }
+        } finally {
+            frame.analyse.clearMove();
         }
-        frame.analyse.clearMove();
 
         Point home = new Point(rectangle.x + rectangle.width + 10, rectangle.y + rectangle.height + 10);
         user.move(user.random(home, missClick));
