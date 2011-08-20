@@ -112,4 +112,20 @@ public class RangeColor {
         min = (rl << 16) | (gl << 8) | (bl);
         max = (rh << 16) | (gh << 8) | (bh);
     }
+
+    int av(int l, int h) {
+        return l + (h - l) / 2;
+    }
+
+    public int average() {
+        int rl = (min & 0xff0000) >> 16;
+        int gl = (min & 0x00ff00) >> 8;
+        int bl = (min & 0x0000ff) >> 0;
+
+        int rh = (max & 0xff0000) >> 16;
+        int gh = (max & 0x00ff00) >> 8;
+        int bh = (max & 0x0000ff) >> 0;
+
+        return (av(rl, rh) << 16) | (av(gl, gh) << 8) | (av(bl, bh));
+    }
 }
