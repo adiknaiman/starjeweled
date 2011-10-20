@@ -10,7 +10,7 @@ Simple algorithm analyse https://github.com/axet/starjeweled/wiki/Analyse
 
 ## Youtube demo
 
-http://www.youtube.com/watch?v=D9evUZP4vSY
+ * http://www.youtube.com/watch?v=D9evUZP4vSY
 
 ## Donations
 
