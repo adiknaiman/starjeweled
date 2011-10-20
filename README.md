@@ -8,10 +8,8 @@ Additional information you can found on the web wiki: https://github.com/axet/st
 
 Simple algorithm analyse https://github.com/axet/starjeweled/wiki/Analyse
 
-<object>
-  <param name="movie" value="http://www.youtube.com/watch?v=D9evUZP4vSY"></param>
-  <embed src="http://www.youtube.com/watch?v=D9evUZP4vSY" type="application/x-shockwave-flash"></embed>
-</object>
+## Youtube demo
+http://www.youtube.com/watch?v=D9evUZP4vSY
 
-
+## Donations
 Your donations is welcome here : https://github.com/axet/starjeweled/wiki/Donation
