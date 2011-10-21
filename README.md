@@ -14,4 +14,4 @@ http://www.youtube.com/watch?v=D9evUZP4vSY
 
 ## Donations
 
-Your donations is welcome here : https://github.com/axet/starjeweled/wiki/Donation
+Your donations are welcome here : https://github.com/axet/starjeweled/wiki/Donation
