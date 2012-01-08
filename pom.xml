@@ -4,18 +4,13 @@
 
   <groupId>com.github.axet</groupId>
   <artifactId>starjeweled</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>2.0.0</version>
   <packaging>jar</packaging>
 
   <name>starjeweled</name>
   <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
   <build>
-    <finalName>starjeweled</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
