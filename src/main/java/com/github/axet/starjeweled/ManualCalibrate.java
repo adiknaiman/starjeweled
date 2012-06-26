@@ -10,7 +10,7 @@ public class ManualCalibrate {
     	Capture capture = new Capture();
         BufferedImage desktopImage;
         desktopImage = capture.capture();
-        capture.write(desktopImage, "calibrate.png");
+        capture.save(desktopImage, "calibrate.png");
     }
     
 }

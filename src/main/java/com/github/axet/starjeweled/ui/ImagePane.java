@@ -1,27 +1,31 @@
 package com.github.axet.starjeweled.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ImagePane extends JPanel {
 
     private static final long serialVersionUID = -775581665000921461L;
 
+    BufferedImage img;
     ImageIcon icon;
 
     public ImagePane() {
     }
 
     public void setImage(BufferedImage image) {
+        this.img = image;
         icon = new ImageIcon(image);
 
         repaint();
+    }
+
+    public BufferedImage getImage() {
+        return img;
     }
 
     protected void paintComponent(Graphics g) {

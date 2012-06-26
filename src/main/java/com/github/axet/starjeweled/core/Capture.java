@@ -2,10 +2,8 @@ package com.github.axet.starjeweled.core;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -13,13 +11,15 @@ import java.awt.color.ColorSpace;
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_ProfileRGB;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
 public class Capture {
 
-    public BufferedImage capture() {
+    public static BufferedImage capture() {
         try {
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
             Robot robot = new Robot();
@@ -30,7 +30,7 @@ public class Capture {
         }
     }
 
-    public BufferedImage capture(Rectangle rec) {
+    public static BufferedImage capture(Rectangle rec) {
         try {
             Robot robot = new Robot();
             BufferedImage img = robot.createScreenCapture(rec);
@@ -75,10 +75,10 @@ public class Capture {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
     }
 
-    public BufferedImage load(String path) {
+    public static BufferedImage load(File path) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File(path));
+            img = ImageIO.read(path);
             return img;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -86,7 +86,7 @@ public class Capture {
 
     }
 
-    public BufferedImage load(String path, Rectangle rect) {
+    public static BufferedImage load(File path, Rectangle rect) {
         BufferedImage src = load(path);
 
         BufferedImage dest = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), src.getType());
@@ -98,13 +98,20 @@ public class Capture {
         return dest;
     }
 
-    public void write(BufferedImage img, String file) {
+    public static void save(BufferedImage img, String file) {
         try {
-            file = System.getProperty("user.home") + "/Desktop/" + file;
             ImageIO.write(img, "PNG", new File(file));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    public static BufferedImage filterGamma(BufferedImage img) {
+        Raster r = img.getData();
+        DataBufferByte b = (DataBufferByte) r.getDataBuffer();
+        byte[] bb = b.getData();
+        int[] i = r.getPixel(0, 0, new int[] {});
+        System.out.println(String.format("should be 0xf3 %x", img.getRGB(0, 0)));
+        return img;
+    }
 }

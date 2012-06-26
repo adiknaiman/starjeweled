@@ -67,10 +67,11 @@ public class App {
 
         capture = new Capture();
         BufferedImage desktopImage;
-        // desktopImage =
-        // capture.load("/Users/axet/Desktop//Screen Shot 2011-08-19 at 18.55.22.png");
+        // desktopImage = capture.load("/Users/axet/Desktop/big.png");
         desktopImage = capture.capture();
+        // capture.save(desktopImage, "/Users/axet/Desktop/test.png");
         frame.capture.setImage(desktopImage);
+        frame.bounds2.setImage(desktopImage);
 
         Lookup lookup = new Lookup();
         BufferedImage i = lookup.filterMask(desktopImage);
@@ -152,7 +153,7 @@ public class App {
         MainFrame frame = new MainFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(700, 500));
-        frame.setAlwaysOnTop(true);
+        // frame.setAlwaysOnTop(true);
 
         OutputPane out = frame.out;
 
