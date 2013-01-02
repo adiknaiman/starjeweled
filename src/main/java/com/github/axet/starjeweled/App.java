@@ -67,13 +67,17 @@ public class App {
 
         capture = new Capture();
         BufferedImage desktopImage;
-        // desktopImage = capture.load("/Users/axet/Desktop/big.png");
-        desktopImage = capture.capture();
+        desktopImage = Capture.load(new File("/Users/axet/Desktop/capture.png"));
+        // desktopImage = capture.capture();
         // capture.save(desktopImage, "/Users/axet/Desktop/test.png");
         frame.capture.setImage(desktopImage);
         frame.bounds2.setImage(desktopImage);
 
         Lookup lookup = new Lookup();
+        BufferedImage i4 = lookup.filterEdgeFilter(desktopImage);
+        Capture.save(i4, "/Users/axet/Desktop/filter.png");
+        BufferedImage i5 = lookup.filterNoise(i4);
+        Capture.save(i5, "/Users/axet/Desktop/filter2.png");
         BufferedImage i = lookup.filterMask(desktopImage);
         frame.mask.setImage(i);
         BufferedImage i2 = lookup.filterNoise(i);

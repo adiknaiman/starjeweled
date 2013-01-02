@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import com.github.axet.starjeweled.core.Capture;
+import com.github.axet.starjeweled.core.Lookup;
 
 public class Bounds2Pane extends JPanel {
 
@@ -165,6 +166,14 @@ public class Bounds2Pane extends JPanel {
         gbc_validate.insets = new Insets(0, 0, 0, 5);
         gbc_validate.gridx = 1;
         gbc_validate.gridy = 5;
+        validate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                Lookup l = new Lookup();
+                image.setImage(l.filterEdgeFilter(image.getImage()));
+                image.invalidate();
+                validate();
+            }
+        });
         controls.add(validate, gbc_validate);
         GridBagConstraints gbc_step = new GridBagConstraints();
         gbc_step.fill = GridBagConstraints.HORIZONTAL;
@@ -172,6 +181,10 @@ public class Bounds2Pane extends JPanel {
         gbc_step.insets = new Insets(0, 0, 0, 5);
         gbc_step.gridx = 2;
         gbc_step.gridy = 5;
+        step.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
         controls.add(step, gbc_step);
         GridBagConstraints gbc_slowRun = new GridBagConstraints();
         gbc_slowRun.fill = GridBagConstraints.HORIZONTAL;
@@ -179,6 +192,10 @@ public class Bounds2Pane extends JPanel {
         gbc_slowRun.insets = new Insets(0, 0, 0, 5);
         gbc_slowRun.gridx = 3;
         gbc_slowRun.gridy = 5;
+        slowRun.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
         controls.add(slowRun, gbc_slowRun);
 
         debug(debug.getState());

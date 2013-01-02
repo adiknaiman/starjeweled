@@ -28,16 +28,16 @@ public class MainFrame extends JFrame {
         pane = new JTabbedPane();
         pane.addTab("Analyse", icon, analyse, "Analyse screen");
         pane.addTab("Capture", icon, capture, "Capture screen");
-        // pane.addTab("Mask", icon, mask, "Filtered screen");
-        // pane.addTab("Noise", icon, noise, "Remove noise screen");
-        // pane.addTab("Bounds", icon, bounds, "Bounds screen");
-        pane.addTab("Bounds2", icon, bounds2, "Bounds2 screen");
+        pane.addTab("Mask", icon, mask, "Filtered screen");
+        pane.addTab("Noise", icon, noise, "Remove noise screen");
+        pane.addTab("Bounds", icon, bounds, "Bounds screen");
+        // pane.addTab("Bounds2", icon, bounds2, "Bounds2 screen");
         pane.addTab("Board", icon, board, "Cropped board");
         pane.addTab("Output", icon, out, "Application debug output");
         pane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         bounds2.frame = this;
-        
+
         this.getRootPane().setLayout(new BorderLayout());
         this.getRootPane().add(pane, BorderLayout.CENTER);
     }

@@ -17,6 +17,9 @@ import java.io.File;
 import java.util.Arrays;
 
 import com.github.axet.starjeweled.common.RangeColor;
+import com.jhlabs.image.DoGFilter;
+import com.jhlabs.image.EdgeFilter;
+import com.jhlabs.image.LaplaceFilter;
 
 public class Lookup {
 
@@ -155,6 +158,33 @@ public class Lookup {
 
             }
         }
+
+        return buff;
+    }
+
+    public BufferedImage filterDoGFilter(BufferedImage bi) {
+        BufferedImage buff = new BufferedImage(bi.getWidth(), bi.getHeight(), bi.getType());
+
+        DoGFilter ef = new DoGFilter();
+        ef.filter(bi, buff);
+
+        return buff;
+    }
+
+    public BufferedImage filterEdgeFilter(BufferedImage bi) {
+        BufferedImage buff = new BufferedImage(bi.getWidth(), bi.getHeight(), bi.getType());
+
+        EdgeFilter ef = new EdgeFilter();
+        ef.filter(bi, buff);
+
+        return buff;
+    }
+
+    public BufferedImage filterLaplaceFilter(BufferedImage bi) {
+        BufferedImage buff = new BufferedImage(bi.getWidth(), bi.getHeight(), bi.getType());
+
+        LaplaceFilter ef = new LaplaceFilter();
+        ef.filter(bi, buff);
 
         return buff;
     }
