@@ -8,6 +8,10 @@ Additional information you can found on the web wiki: https://github.com/axet/st
 
 Simple algorithm analyse https://github.com/axet/starjeweled/wiki/Analyse
 
+## Features
+
+  * board pattern recognition support
+
 ## YouTube demo
 
 http://www.youtube.com/watch?v=D9evUZP4vSY
